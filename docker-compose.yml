@@ -1,0 +1,11 @@
+# docker-compose.yml
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "35432:5432"
+    environment:
+      POSTGRES_USER: samcart
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: samcart
