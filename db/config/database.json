@@ -2,10 +2,10 @@
     "defaultEnv": "pg",
     "pg": {
         "driver": "pg",
-        "user": "smartcart",
-        "host": "0.0.0.0",
-        "port": "5432",
-        "database": "cars",
-        "password": "postgres"
+        "user": "samcart",
+        "host": "localhost",
+        "port": "35432",
+        "database": "samcart",
+        "password": "pass"
     }
 }
