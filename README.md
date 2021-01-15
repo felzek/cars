@@ -17,3 +17,16 @@ The /car/{id} can either be query in single id or in batches of maximum 100. Con
 
 I have created unit testing for both services, however haven't had time to give it time for integration testing. If time isn't a issue, then I should be able to create an integration testing this weekend as well.
 
+Wish I have more time but I am extremly busy this week with some deadlines to finish, will have more time to finish this up this weekend.
+
+
+
+GET /car
+return a list of car id and their data
+
+GET /car/{id}
+
+params id - can either big a single id, or a list of id be separated by semicolon
+
+for example you can send in /car/a;b;c as a param.
+
