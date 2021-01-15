@@ -1,31 +1,23 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const weather = require('./controllers/weather');
+const pgClient = require('./models/pgclient');
 var cors = require('cors');
+
 app.use(cors());
 
+pgClient.connect();
 
 app.get('/car/{id}', async (req,res) => {
-  const carId = req.query.id;
-  const carIds = req.
-  let weatherRes;
-  if(!latitude || !longitude || !tempunit)
-  {
-    return res.status(400).send('please include all query parameters');
-  }
+  const carIds = req.query.id;
+  const sqlParams = carIds.split(';').join(',');
+  const sqlQuery = `SELECT * FROM cars WHERE id IN ('${sqlParams}');`
+  let sqlRes;
   try{
-    weatherRes = await weather.requestWeatherData(latitude,longitude,tempunit);
-  } catch(err)
+    sqlRes =  pgClient.query(sqlQuery);
+  }catch(err)
   {
-      if(err.response && err.response.data)
-      {
-        return res.status(err.response.data.cod).send(err.response.data.message);
-      }
-    }
-  if(weatherRes)
-  {
-    return res.status(200).send(weatherRes);
+    return res.status('400').send('Server Internal Error');
   }
 })
 

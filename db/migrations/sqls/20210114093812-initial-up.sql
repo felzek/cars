@@ -11,11 +11,8 @@ CREATE TABLE IF NOT EXISTS cars (
     price real not null
 );
 
-  CREATE TABLE users (
-    id uuid PRIMARY KEY,
-    email text UNIQUE,
-    password text
-  );
-
 INSERT INTO cars(id,make,model,package,color,year,category,millege,price) 
-    VALUES ('JH290XJ','Ford','F10','Base','Silver','2010','Truck',120123, 1999900);
+    VALUES ('JH290XJ','Ford','F10','Base','Silver',2010,'Truck',120123, 1999900),
+            ('fwi37a', 'Toyota','Camry', 'SE','White',2019, 'Sedan',3999,2899000),
+            ('1i3xjRllc','Toyota','Rav4','XSE','Red',2018,'SUV',24001,2275000),
+            ('cku43920s', 'Ford','Bronco','Badlands','Burnt Orange',2022,'SUV',1,4499000)
