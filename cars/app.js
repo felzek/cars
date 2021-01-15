@@ -1,36 +1,29 @@
 const express = require('express')
 const app = express()
-const client = require('pg');
 const port = 3000
 const axios = require('axios');
 const _ = require('lodash');
+const pgclient = require('./models/pgclient')
 
 var cors = require('cors');
 
 app.use(cors());
 
 
-const client = new Client({
-  password: "pass",
-  user: "samcart",
-  host: "localhost",
-});
-
-
-
 app.get('/cars', async (req,res) => {
   let database;
   try{ 
-    database = await client.query("SELECT id from cars");
+    database = await pgclient.query("SELECT id from cars");
   }catch(err)
   {
     console.log(err);
   }
 
-  if(database.result && database.result.rows)
+  let rowPromises = [];
+  if(database.rows)
   {
-
-  };
+    console.log(database.row);
+  }
   const batch = [];
 
   // const response = []

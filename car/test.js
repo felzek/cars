@@ -1,6 +1,15 @@
-const carids = '213;323;3232;412321';
+const axios = require('axios');
 
-cardParams = carids.split(';').join(',');
-console.log(cardParams);
-const queryText = `SELECT * FROM cars WHERE id IN ('${cardParams}');`;
-console.log(queryText);
+const x = async() => {
+    try{
+    const y = await axios.get('http://localhost:3000/car/JH290XJ;erew');
+        console.log(y.data);
+}
+    catch(err)
+    {
+        console.log(err);
+    }
+
+}
+
+x();

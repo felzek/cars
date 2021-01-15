@@ -5,20 +5,21 @@ const pgClient = require('./models/pgclient');
 var cors = require('cors');
 
 app.use(cors());
-
 pgClient.connect();
 
-app.get('/car/{id}', async (req,res) => {
-  const carIds = req.query.id;
-  const sqlParams = carIds.split(';').join(',');
-  const sqlQuery = `SELECT * FROM cars WHERE id IN ('${sqlParams}');`
+app.get('/car/:id', async (req,res) => {
+  const carIds = req.params.id;
+  const carIdsParam = carIds.split(';');
   let sqlRes;
   try{
-    sqlRes =  pgClient.query(sqlQuery);
+    sqlRes =  await pgClient.query('SELECT * FROM cars WHERE Id = ANY($1::text[])',[carIdsParam]);
   }catch(err)
   {
+    console.log(err);
     return res.status('400').send('Server Internal Error');
   }
+  if(sqlRes.rows)
+    return res.status('200').send(sqlRes.rows);
 })
 
 app.listen(port, () => {

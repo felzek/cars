@@ -9,6 +9,6 @@ services:
       POSTGRES_USER: samcart
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: samcart
-    volume:
+    volumes:
     - "./db/pg:/var/lib/postgresql/data"
   

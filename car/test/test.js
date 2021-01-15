@@ -25,6 +25,17 @@ describe('PG Client', () => {
         });
     })
     describe('request List of Ids', (done) => {
-        const sampleRequestId = ['']
+        desecribe('single Id')
+        {
+          let res;
+        try{
+          const res = await axios.get('http://localhost:3000/car/JH290XJ;');
+      }
+          catch(err)
+          {
+              assert(err,!err)
+          }
+
+        }
     })
 })
