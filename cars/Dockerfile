@@ -3,4 +3,4 @@ WORKDIR /cars
 COPY ./ .
 RUN npm install
 EXPOSE 3000
-CMD [ "nodemon", "app.js" ]
+CMD [ "node", "app.js" ]

@@ -1,8 +1,6 @@
-FROM node:lts as a
-COPY . /app
-WORKDIR /app
-RUN yarn 
-
-
-FROM a as db-migrator 
-CMD yarn db-migrate-up
+FROM node:lts as dev
+WORKDIR /car
+COPY ./ .
+RUN npm install
+EXPOSE 3001
+CMD [ "node", "app.js" ]

@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = process.ENV.PORT  || 3000
+const port = process.env.PORT  || 3000
 const axios = require('axios');
 const _ = require('lodash');
 const pgClient = require('./models/pgclient')
@@ -11,7 +11,7 @@ app.use(cors());
 pgClient.connect();
 
 const host = process.env.host || 'localhost';
-const carServicePort = process.env.carport || 3001;
+const carServicePort = process.env.carport || 3002;
 
 
 const requestId = id => {

@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const y = async() => {
 let x;
-try{x=await axios.get('http://localhost:3001/cars');
+try{x=await axios.get('http://localhost:3000/cars');
 console.log(x);
 }catch(err)
 {

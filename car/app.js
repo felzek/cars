@@ -1,11 +1,16 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3002
 const pgClient = require('./models/pgclient');
 var cors = require('cors');
 
 app.use(cors());
+try{
 pgClient.connect();
+}catch(err)
+{
+  console.log(err);
+}
 
 app.get('/car/:id', async (req,res) => {
   const carIds = req.params.id;
