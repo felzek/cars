@@ -11,4 +11,25 @@ services:
       POSTGRES_DB: samcart
     volumes:
     - "./db/pg:/var/lib/postgresql/data"
-  
+  # cars:
+  #   build:
+  #     context: ./cars
+  #     dockerfile: Dockerfile
+  #   container_name: cars
+  #   restart: always
+  #   volumes:
+  #     - ./cars/:/app/
+  #     - /app/node_modules
+  #   ports:
+  #     - "3000:3000"
+  car:
+    build:
+      context: ./car
+      dockerfile: Dockerfile
+    container_name: car
+    restart: always
+    volumes:
+      - ./cars/:/app/
+      - /app/node_modules
+    ports:
+      - "3001:3001"

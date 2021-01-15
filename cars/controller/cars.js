@@ -32,8 +32,8 @@ class CarsController{
         console.log(err);
         return res.status(400).send('Internal Server Error with pgclient');
     }
-    if(carIds && carIds.result){
-        
+    if(carIds && carIds.rows){
+        console.log(carIds.rows);
     }
     }
 
