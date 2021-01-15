@@ -11,3 +11,14 @@ console.log(x);
 console.log(x);
 }
 y();
+
+// const z = () => {
+//     const id = [1,2,3,4,5];
+//     const chunk = 6;
+//     for(let i=0; i<id.length; i+ chunk)
+//     {
+//         console.log(id.splice(0,i+chunk));
+//     }
+// }
+
+// z();

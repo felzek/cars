@@ -16,17 +16,28 @@ const carServicePort = process.env.carport || 3002;
 
 const requestId = id => {
   return new Promise(async (resolve,reject)=> {
+    let idReq = [];
+    id.forEach((obj) => {
+      idReq.push(obj.id);
+    })
+    const idList = idReq.join(';');
     let res; 
     try{
-      res = await axios.get(`http://${host}:${carServicePort}/car/id${id}`)
-      console.log(res);
+      res = await axios.get(`http://${host}:${carServicePort}/car/id${idList}`)
     }
     catch(err)
     {
       reject(err);
     }
-      resolve()
+      resolve(res.data);
   })
+}
+
+
+const flatten = arr => {
+  return arr.reduce(function (flat, toFlatten) {
+    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+  }, []);
 }
 
 app.get('/cars', async (req,res) => {
@@ -40,21 +51,22 @@ app.get('/cars', async (req,res) => {
   if(database.rows)
   {
     const listOfId = database.rows;
-    const promiseBatch = [];
-    const ids =[];
-    listOfId.forEach((obj) => {
-      ids.push(obj.id);
-    });
-    const idReq = ids.join(';');
-    await requestId(idReq);
+    promiseBatch = [];
+    const chunk = 100;
+    console.log(listOfId.length);
+    for(let i =0; i <= listOfId.length; i+=chunk){
+     // Slice the array in batch of 100
+      const batchIds = listOfId.slice(i, i+chunk);
+      // Send the batch in to a promises for performance
+      promiseBatch.push(requestId(batchIds));
+    };
+    // Resolve all the Promises in the promise batch for performance
+    const res = await Promise.all(promiseBatch);
+    // The Result is an array inside of an array, this flattnes it which shouldn't affect much performance
+    const finalRes = flatten(res);
+    // Return the final results along with a status 200
+    return res.status(200).send(finalRes);
     }
-
-
-  // const response = []
-  // carsId.forEach(async(carId) => {
-  //   const carRes = await axios.get(`/car/${carId}`);
-  //   console.log(carRes);
-  // })
 })
 
 app.listen(port, () => {
