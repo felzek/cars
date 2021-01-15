@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT  || 3000
 const axios = require('axios');
-const _ = require('lodash');
 const pgClient = require('./models/pgclient')
 
 var cors = require('cors');
