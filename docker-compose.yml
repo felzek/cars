@@ -26,7 +26,7 @@ services:
     container_name: cars
     restart: always
     volumes:
-      - ./cars/:/app/
+      - ./cars/:/app
       - /app/node_modules
     environment:
       DB_HOST: host.docker.internal

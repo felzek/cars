@@ -7,15 +7,11 @@ const pgClient = require('./models/pgclient')
 var cors = require('cors');
 
 app.use(cors());
-try{
+
 pgClient.connect();
-console.log(pgClient);
-}catch(err)
-{
-  console.log(err);
-}
-const host = process.env.host || 'localhost';
-const carServicePort = process.env.carport || 3002;
+
+const host = 'host.docker.internal' || 'localhost';
+const carServicePort = process.env.carport || 3001;
 
 
 const requestId = id => {
@@ -25,15 +21,23 @@ const requestId = id => {
       idReq.push(obj.id);
     })
     const idList = idReq.join(';');
-    let res; 
+    let carData; 
     try{
-      res = await axios.get(`http://${host}:${carServicePort}/car/id${idList}`)
+      carData = await axios.get(`http://${host}:${carServicePort}/car/${idList}`)
     }
     catch(err)
     {
+      console.log(err)
       reject(err);
     }
-      resolve(res.data);
+    if(carData)
+    {
+      console.log(carData);
+     return resolve(carData.data);
+    }
+    else{
+      return resolve('unable to find res from the old cars services');
+    }
   })
 }
 
@@ -45,6 +49,7 @@ const flatten = arr => {
 }
 
 app.get('/cars', async (req,res) => {
+  console.log('request',req);
   let database;
   try{ 
     database = await pgClient.query("SELECT id from cars");
@@ -65,14 +70,21 @@ app.get('/cars', async (req,res) => {
       promiseBatch.push(requestId(batchIds));
     };
     // Resolve all the Promises in the promise batch for performance
-    const res = await Promise.all(promiseBatch);
+    let response;
+    try{
+    response = await Promise.all(promiseBatch);
+    }catch(err)
+    {
+      console.log(err);
+      return res.status(400).send('internal server error');
+    }
     // The Result is an array inside of an array, this flattnes it which shouldn't affect much performance
-    const finalRes = flatten(res);
+    const finalRes = flatten(response);
     // Return the final results along with a status 200
     return res.status(200).send(finalRes);
     }
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app listening at ${port}`)
 })

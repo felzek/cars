@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3002
+const port = 3001
 const pgClient = require('./models/pgclient');
 var cors = require('cors');
 
@@ -28,5 +28,5 @@ app.get('/car/:id', async (req,res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app listening at ${port}`)
 })
