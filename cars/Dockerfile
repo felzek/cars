@@ -6,7 +6,6 @@ COPY package*.json ./
 RUN npm install
 
 RUN npm install nodemon -g
-RUN npm install knex -g
 
 COPY . .
 

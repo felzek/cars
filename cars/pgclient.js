@@ -6,6 +6,7 @@ const pgclient = new Client({
     host: "postgres",
     port: "35432"
   });
+  
 
   module.exports= pgclient;
   

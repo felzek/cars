@@ -9,6 +9,7 @@ services:
       POSTGRES_USER: samcart
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: samcart
+    container_name: postgres
     volumes:
     - "./db/pg:/var/lib/postgresql/data"
   db-migrator:
@@ -16,7 +17,8 @@ services:
       context: ./db
       dockerfile: Dockerfile
     container_name: db-migrator
-    restart: always
+    depends_on: 
+      - postgres
     environment: 
       DB_HOST: host.docker.internal
   cars:
@@ -28,6 +30,9 @@ services:
     volumes:
       - ./cars/:/app
       - /app/node_modules
+    depends_on:
+      - postgres
+      - db-migrator
     environment:
       DB_HOST: host.docker.internal
       POSTGRES_USER: samcart
@@ -41,6 +46,9 @@ services:
       dockerfile: Dockerfile
     container_name: car
     restart: always
+    depends_on:
+      - postgres
+      - db-migrator
     volumes:
       - ./car/:/app/
       - /app/node_modules

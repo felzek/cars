@@ -8,7 +8,7 @@ var cors = require('cors');
 
 app.use(cors());
 
-pgClient.connect();
+
 
 const host = 'host.docker.internal' || 'localhost';
 const carServicePort = process.env.carport || 3001;
@@ -49,7 +49,12 @@ const flatten = arr => {
 }
 
 app.get('/cars', async (req,res) => {
-  console.log('request',req);
+  try{
+    await pgClient.connect();
+  }catch(err)
+  {
+    return res.status(400).send(err)
+  }
   let database;
   try{ 
     database = await pgClient.query("SELECT id from cars");

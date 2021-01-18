@@ -17,6 +17,12 @@ app.get('/car/:id', async (req,res) => {
   const carIdsParam = carIds.split(';');
   let sqlRes;
   try{
+    await pgClient.connect();
+  }catch(err)
+  {
+    return res.status(400).send(err)
+  }
+  try{
     sqlRes =  await pgClient.query('SELECT * FROM cars WHERE Id = ANY($1::text[])',[carIdsParam]);
   }catch(err)
   {

@@ -1,6 +1,15 @@
 FROM node:lts as dev
-WORKDIR /car
-COPY ./ .
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
 RUN npm install
+
+RUN npm install nodemon -g
+
+
+COPY . .
+
 EXPOSE 3001
-CMD [ "node", "app.js" ]
+
+CMD ["nodemon","app.js"]
