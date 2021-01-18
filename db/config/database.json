@@ -3,7 +3,7 @@
     "pg": {
         "driver": "pg",
         "user": "samcart",
-        "host": "localhost",
+        "host": { "ENV": "DB_HOST" },
         "port": "35432",
         "database": "samcart",
         "password": "pass"

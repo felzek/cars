@@ -7,8 +7,13 @@ const pgClient = require('./models/pgclient')
 var cors = require('cors');
 
 app.use(cors());
+try{
 pgClient.connect();
-
+console.log(pgClient);
+}catch(err)
+{
+  console.log(err);
+}
 const host = process.env.host || 'localhost';
 const carServicePort = process.env.carport || 3002;
 

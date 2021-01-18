@@ -11,6 +11,14 @@ services:
       POSTGRES_DB: samcart
     volumes:
     - "./db/pg:/var/lib/postgresql/data"
+  db-migrator:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: db-migrator
+    restart: always
+    environment: 
+      DB_HOST: host.docker.internal
   cars:
     build:
       context: ./cars
@@ -20,6 +28,11 @@ services:
     volumes:
       - ./cars/:/app/
       - /app/node_modules
+    environment:
+      DB_HOST: host.docker.internal
+      POSTGRES_USER: samcart
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: samcart
     ports:
       - "3000:3000"
   car:
@@ -31,5 +44,10 @@ services:
     volumes:
       - ./car/:/app/
       - /app/node_modules
+    environment:
+      DB_HOST: host.docker.internal
+      POSTGRES_USER: samcart
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: samcart
     ports:
       - "3001:3001"
