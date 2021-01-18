@@ -6,19 +6,17 @@ var cors = require('cors');
 
 app.use(cors());
 try{
-pgClient.connect();
+  pgClient.connect();
 }catch(err)
 {
-  console.log(err);
+ console.log(err);
 }
 
 app.get('/car/:id', async (req,res) => {
   const carIds = req.params.id;
   const carIdsParam = carIds.split(';');
   let sqlRes;
-  try{
-    await pgClient.connect();
-  }catch(err)
+
   {
     return res.status(400).send(err)
   }
