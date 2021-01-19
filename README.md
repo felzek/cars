@@ -4,7 +4,7 @@
 
 docker-compose up, the /cars route is at port 3000 and /car/${id} is at port 3001
 
-if the retries are used up may have to `docker restart car` and `docker restart cars` for it to work properly if it doesnt work the first time but probably won't have to.
+May have to `docker restart car` and `docker restart cars` for it to work properly if it doesnt work the first time but probably won't have to.
 
 Explanation
 I have postgres server save as the database and have db-migrator to execute the initial migration. The cars service manage to pull all the ids from the database and use it to query the /car/{id} service in order. 
@@ -13,7 +13,7 @@ In a real life siutation, this will be query two different data sources than fro
 
 The /car/{id} can either be query in single id or in batches of maximum 100. Consideirng the general id for a car is 7 characters, and the maximum secruity protocol sets the maxQueryString to 1024 and entire querystring to 2048 characters this should be no issue. 
 
-I have created unit testing for both services
+I have created unit testing for both services. Sirry the code isn't as clean or structured. still in middle of refactoring atm.
 
 API Doc
 
