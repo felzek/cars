@@ -4,7 +4,7 @@
 
 docker-compose up, the /cars route is at port 3000 and /car/${id} is at port 3001
 
-if the retries are used up may have to `docker restart car` and `docker restart cars` for it to work properly if it doesnt work the first time
+if the retries are used up may have to `docker restart car` and `docker restart cars` for it to work properly if it doesnt work the first time but probably won't have to.
 
 Explanation
 I have postgres server save as the database and have db-migrator to execute the initial migration. The cars service manage to pull all the ids from the database and use it to query the /car/{id} service in order. 
