@@ -2,10 +2,9 @@
 
 ## How to run
 
+docker-compose up, the /cars route is at port 3000 and /car/${id} is at port 3001
 
-docker-compose up
-
-may have to `docker restart car` and `docker restart cars` for it to work properly if it doesnt work the first time
+if the retries are used up may have to `docker restart car` and `docker restart cars` for it to work properly if it doesnt work the first time
 
 Explanation
 I have postgres server save as the database and have db-migrator to execute the initial migration. The cars service manage to pull all the ids from the database and use it to query the /car/{id} service in order. 
@@ -16,11 +15,12 @@ The /car/{id} can either be query in single id or in batches of maximum 100. Con
 
 I have created unit testing for both services
 
+API Doc
 
-GET /car
+`GET /car`
 return a list of car id and their data
 
-GET /car/{id}
+`GET /car/{id}`
 
 params id - can either big a single id, or a list of id be separated by semicolon
 

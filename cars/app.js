@@ -8,16 +8,9 @@ var cors = require('cors');
 
 app.use(cors());
 
-try{
-   pgClient.connect();
-}catch(err)
-{
-  console.log(err);
-}
 
 const host = 'host.docker.internal' || 'localhost';
 const carServicePort = process.env.carport || 3001;
-
 
 const requestId = id => {
   return new Promise(async (resolve,reject)=> {
